@@ -1,0 +1,44 @@
+{
+  "name": "nexus-plugin-claims",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/nexus-plugin-claims.esm.js",
+  "description": "A Nexus framework plugin",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc --watch",
+    "build:doc": "doctoc README.md --notitle",
+    "build:ts": "tsc",
+    "build": "yarn -s build:ts && yarn -s build:doc",
+    "test": "jest",
+    "publish:stable": "dripip stable",
+    "publish:preview": "dripip preview",
+    "publish:pr": "dripip pr",
+    "prepack": "yarn -s build"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.13",
+    "doctoc": "^1.4.0",
+    "jest": "^26.4.2",
+    "jest-watch-typeahead": "^0.6.1",
+    "nexus": "^0.26.1",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  }
+}
