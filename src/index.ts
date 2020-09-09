@@ -1,13 +1,9 @@
 import { PluginEntrypoint } from 'nexus/plugin'
 
-export const plugin: PluginEntrypoint = () => ({
+export const claims: PluginEntrypoint = () => ({
   packageJsonPath: require.resolve('../package.json'),
   runtime: {
     module: require.resolve('./runtime'),
-    export: 'plugin'
-  },
-  worktime: {
-    module: require.resolve('./worktime'),
-    export: 'plugin'
+    export: 'plugin',
   },
 })
