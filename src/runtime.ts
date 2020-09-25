@@ -28,6 +28,9 @@ export const plugin = (settings: any) => (project: any) => {
                 const user = await ctx.db.user.findOne({
                   where: {
                     authenticationId,
+                    isDeleted: {
+                      equals: false
+                    }
                   },
                   include: {
                     claims: {
