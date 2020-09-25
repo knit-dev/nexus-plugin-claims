@@ -29,8 +29,8 @@ export const plugin = (settings: any) => (project: any) => {
                   where: {
                     authenticationId,
                     isDeleted: {
-                      equals: false
-                    }
+                      equals: false,
+                    },
                   },
                   include: {
                     claims: {
