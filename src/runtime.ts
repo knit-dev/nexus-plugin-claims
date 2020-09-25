@@ -9,6 +9,7 @@ export const plugin = (settings: any) => (project: any) => {
       typeGen: {
         fields: {
           userClaims: `any | null`,
+          isActiveUser: `boolean | null`,
         },
       },
     },
@@ -18,19 +19,14 @@ export const plugin = (settings: any) => (project: any) => {
           name: 'Nexus Schema Claims Plugin',
           onCreateFieldResolver(config) {
             return async (root, args, ctx, info, next) => {
-              if (!ctx) {
-                ctx = {}
-              }
+              ctx = ctx || {}
 
               const authenticationId = ctx?.token?.sub
 
-              if (!ctx.userClaims && authenticationId) {
+              if (ctx.isActiveUser === undefined && authenticationId) {
                 const user = await ctx.db.user.findOne({
                   where: {
                     authenticationId,
-                    isDeleted: {
-                      equals: false,
-                    },
                   },
                   include: {
                     claims: {
@@ -42,7 +38,10 @@ export const plugin = (settings: any) => (project: any) => {
                   },
                 })
 
-                if (user && user.claims) {
+                const isActiveUser = Boolean(user && user.isDeleted === false)
+                ctx.isActiveUser = isActiveUser
+
+                if (isActiveUser) {
                   ctx.userClaims = user.claims
                 }
               }
